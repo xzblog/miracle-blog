@@ -97,7 +97,8 @@ export function getPostsByTag(posts: Post[], tag: string): Post[] {
 // 获取特定文章
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   try {
-    const fullPath = path.join(postsDirectory, `${decodeURIComponent(slug)}.md`);
+    const isDev = process.env.NODE_ENV === 'development'
+    const fullPath = path.join(postsDirectory, `${isDev ? decodeURIComponent(slug) : slug}.md`);
     // 确保文件存在
     if (!fs.existsSync(fullPath)) {
       console.error(`Error getting post by slug: ${slug}`,);

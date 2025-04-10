@@ -4,15 +4,17 @@ import { notFound } from 'next/navigation';
 import PostLayout from '@/components/PostLayout';
 
 function extractTOC(content: string) {
-  const headingRegex = /<h([1-6])[^>]*?id="([^"]+)"[^>]*?>([^<]+?)(?:<a[^>]*?class="anchor"[^>]*?>.*?<\/a>)?<\/h[1-6]>/g;
+  const headingRegex = /<h([1-6])[^>]*?id="([^"]+)"[^>]*?>(.*?)<\/h[1-6]>/g;
   const toc = [];
   let match;
 
   while ((match = headingRegex.exec(content)) !== null) {
+    // 移除标题中的 HTML 标签和锚点链接
+    const text = match[3].replace(/<[^>]+>/g, '').trim();
     toc.push({
       level: parseInt(match[1]),
       id: match[2],
-      text: match[3].trim()
+      text: text
     });
   }
 

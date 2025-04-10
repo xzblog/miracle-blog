@@ -4,19 +4,25 @@ import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 
 export default function ThemeToggle() {
+  const [mounted, setMounted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
-  // 添加主题变化监听
+  // 只在客户端渲染时设置 mounted 状态
   useEffect(() => {
-    console.log('当前主题:', theme);
-  }, [theme]);
+    setMounted(true);
+  }, []);
 
   const themes = [
     { name: 'light', icon: '☀️', label: '明亮' },
     { name: 'dark', icon: '🌙', label: '暗黑' },
     { name: 'system', icon: '💻', label: '系统' },
   ];
+
+  // 在服务器端渲染时不显示任何内容
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div
@@ -30,12 +36,9 @@ export default function ThemeToggle() {
             <button
               key={t.name}
               onClick={() => {
-                console.log('切换主题到:', t.name);
                 setTheme(t.name);
               }}
-              className={`px-2 rounded-lg transition-colors
-                ${theme === t.name ? 'bg-blue-100 dark:bg-blue-900' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}
-              `}
+              className={`px-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-700`}
               title={t.label}
             >
               <span className="text-xl">{t.icon}</span>
