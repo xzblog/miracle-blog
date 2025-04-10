@@ -11,9 +11,7 @@ export const metadata: Metadata = {
 
 export default async function Home({
   searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+}: { searchParams: Promise<Record<string,string>>}) {
   // 获取所有文章
   const allPosts = await getAllPosts();
   

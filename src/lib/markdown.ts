@@ -51,33 +51,7 @@ export async function getAllPosts(): Promise<Post[]> {
           .use(remarkGfm) // 支持GitHub风格Markdown（表格、任务列表等）
           .use(remarkRehype)
           .use(rehypeSlug) // 为标题添加ID
-          .use(rehypeAutolinkHeadings, { // 为标题添加锚点链接
-            behavior: 'append',
-            properties: {
-              className: ['anchor'],
-              ariaHidden: true,
-              tabIndex: -1
-            },
-            content: {
-              type: 'element',
-              tagName: 'svg',
-              properties: {
-                xmlns: 'http://www.w3.org/2000/svg',
-                viewBox: '0 0 16 16',
-                width: 16,
-                height: 16,
-                className: ['ml-2 h-4 w-4 opacity-0 group-hover:opacity-100']
-              },
-              children: [{
-                type: 'element',
-                tagName: 'path',
-                properties: {
-                  fillRule: 'evenodd',
-                  d: 'M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'
-                }
-              }]
-            }
-          })
+          .use(rehypeAutolinkHeadings, { behavior: 'append' })
           .use(rehypeHighlight) // 代码高亮
           .use(rehypeStringify)
           .process(matterResult.content);
@@ -140,33 +114,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       .use(remarkGfm) // 支持GitHub风格Markdown（表格、任务列表等）
       .use(remarkRehype)
       .use(rehypeSlug) // 为标题添加ID
-      .use(rehypeAutolinkHeadings, { // 为标题添加锚点链接
-        behavior: 'append',
-        properties: {
-          className: ['anchor'],
-          ariaHidden: true,
-          tabIndex: -1
-        },
-        content: {
-          type: 'element',
-          tagName: 'svg',
-          properties: {
-            xmlns: 'http://www.w3.org/2000/svg',
-            viewBox: '0 0 16 16',
-            width: 16,
-            height: 16,
-            className: ['ml-2 h-4 w-4 opacity-0 group-hover:opacity-100']
-          },
-          children: [{
-            type: 'element',
-            tagName: 'path',
-            properties: {
-              fillRule: 'evenodd',
-              d: 'M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'
-            }
-          }]
-        }
-      })
+      .use(rehypeAutolinkHeadings, { behavior: 'append' })
       .use(rehypeHighlight) // 代码高亮
       .use(rehypeStringify)
       .process(matterResult.content);
