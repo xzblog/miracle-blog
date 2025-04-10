@@ -39,9 +39,8 @@ export async function getAllPosts(): Promise<Post[]> {
         const fullPath = path.join(postsDirectory, fileName);
         const fileContents = fs.readFileSync(fullPath, 'utf8');
         const matterResult = matter(fileContents);
-        
-        // 使用 fileName 字段作为 slug，如果不存在则使用文件名
-        const slug = encodeURIComponent(fileName.replace(/\.md$/, ''));
+
+        const slug = fileName.replace(/\.md$/, '');
 
         // 使用 gray-matter 解析 frontmatter 已在上面完成
 
@@ -97,11 +96,11 @@ export function getPostsByTag(posts: Post[], tag: string): Post[] {
 // 获取特定文章
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   try {
-    const isDev = process.env.NODE_ENV === 'development'
-    const fullPath = path.join(postsDirectory, `${isDev ? decodeURIComponent(slug) : slug}.md`);
+    const fileName = `${decodeURIComponent(slug)}.md`;
+    const fullPath = path.join(postsDirectory, fileName);
     // 确保文件存在
     if (!fs.existsSync(fullPath)) {
-      console.error(`Error getting post by slug: ${slug}`,);
+      console.error(`File does not exist: ${fileName}`,);
       return null;
     }
     const fileContents = fs.readFileSync(fullPath, 'utf8');
